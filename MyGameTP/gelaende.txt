@@ -1,0 +1,6 @@
+wasser.bmp
+gras.bmp
+erde.bmp
+sand.bmp
+schnee.bmp
+fels.bmp
