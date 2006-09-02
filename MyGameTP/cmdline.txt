@@ -1,0 +1,22 @@
+Mögliche Kommandozeilenparameter für MyGame.exe
+
+ 320x200
+ 640x200
+ 640x350
+ 640x400
+ 640x480
+ 800x600
+ 1024x768
+ 1280x1024
+
+ 1bit
+ 4bit
+ 4bit-grey
+ 8bit
+ 8bit-grey
+ 15bit
+ 16bit
+ 24bit
+
+Der voreingestellte Modus ist: 1024x768 16bit.
+Achtung: Nicht alle Kombinationen sind möglich.
