@@ -4,3 +4,4 @@ erde.bmp
 sand.bmp
 schnee.bmp
 fels.bmp
+schngras.bmp
