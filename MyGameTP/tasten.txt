@@ -1,5 +1,5 @@
 0-9  : Untergrund setzen - 0=Wasser
-a-z  : Gebäude setzen - a=kein Gebäude
+a-Z  : Gebäude setzen - a=kein Gebäude
 Entf : Feld löschen - Entfernt das im Feld befindliche Gebäude und den Boden
 Pos1 : alles löschen - Entfernt alle Gebäude und vereinheitlicht den Untergrund
 Einfg: laden - läd die zuvor gespeicherte Karte
