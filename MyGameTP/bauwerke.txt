@@ -17,3 +17,13 @@
 1weg.bmp
 1weg_2.bmp
 1weg_3.bmp
+4berg_1.bmp
+4berg_2.bmp
+1wall.bmp
+1wall2.bmp
+1wall3.bmp
+1stwall.bmp
+1stwall2.bmp
+1stwall3.bmp
+1wachturm.bmp
+2huette.bmp
