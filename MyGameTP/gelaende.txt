@@ -5,3 +5,6 @@ sand.bmp
 schnee.bmp
 fels.bmp
 schngras.bmp
+gras2.bmp
+gras3.bmp
+graserde.bmp
