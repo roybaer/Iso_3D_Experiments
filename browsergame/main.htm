@@ -9,8 +9,13 @@
     <script type="text/javascript">
       maxterrnr = 8;
       terrfiles = new Array("wasser.gif","gras.gif","gras2.gif","gras3.gif","schngras.gif","erde.gif","fels.gif","sand.gif","schnee.gif");
+      builfiles = new Array("noimage.gif","baum.gif","baum_2.gif","baum_3.gif","laubbaum.gif");
+      builwh = new Array(100,50, 110,145, 100,140, 99,141, 169,133);
       terrmap = new Array(1024);
+      builmap = new Array(1024);
+      var building = 1;
       var paintwith = 0;
+      var mode = 1;
 
       bilder = new Array(1024);
       for (y=0;y<=31;y++){
@@ -27,10 +32,68 @@
         }
       }
 
+      bauten = new Array(1024);
+      for (t=0;t<=63;t++){
+        a=32-Math.abs(32-t);
+        for (l=0;l<a;l++){
+          if (t<=32){
+            y=a-(a-l);
+            x=32-(a-l);
+          }else{
+            y=(64-a)-(32-l);
+            x=l;
+          }
+
+          i=y*32+x;
+          bauten[i] = document.createElement("img");
+          bauten[i].src = "noimage.gif";
+          bauten[i].style.position = "absolute";
+          bauten[i].style.top = 800+y*25-x*25+"px";
+          bauten[i].style.left = y*50+x*50+"px";
+          bauten[i].border=0;
+          document.getElementById("mainbody").appendChild(bauten[i]);
+          builmap[i]=0;
+        }
+      }
+
       function setterr(index){
         if (paintwith<=maxterrnr){
           terrmap[index] = paintwith;
           bilder[index].src = terrfiles[paintwith]}else{bilder[index].src = terrfiles[0];
+        }
+      }
+
+      function canbuildat(index){
+        var result=true;
+        if ((terrmap[index]==0)||(builmap[index]!=0)) result=false;
+        return result;
+      }
+
+      function rembuil(index){
+        if ((builmap[index]!=255)&&(builmap[index]!=0)){
+          var building_removed=builmap[index];
+          builmap[index]=0;
+          bauten[index].src = "noimage.gif";
+          bauten[index].style.top=800+Math.floor(index/32)*25-(index%32)*25+"px";
+          bauten[index].style.left = Math.floor(index/32)*50+(index%32)*50+"px";
+          bauten[index].width = 100;
+          bauten[index].height = 50;
+        }
+      }
+
+      function buildat(index){
+        if (building==0){rembuil(index)}else
+        {
+          if (canbuildat(index)){
+            bauten[index].src = builfiles[building];
+            var topOfs = 50+800-builwh[building*2+1]+Math.floor(index/32)*25-(index%32)*25;
+            var leftOfs = 50-builwh[building*2]/2+Math.floor(index/32)*50+(index%32)*50;
+            bauten[index].style.top=topOfs+"px";
+            bauten[index].style.left=leftOfs+"px";
+            bauten[index].width = builwh[building*2];
+            bauten[index].height = builwh[building*2+1];
+            builmap[index] = building;
+          }
         }
       }
 
@@ -41,7 +104,10 @@
         var top=Ereignis.clientY+document.body.scrollTop; // window.pageYOffset;
         xpos=Math.round(((left-50)/50-(top-825)/25)/2);
         ypos=Math.round(((top-825)/25+(left-50)/50)/2);
-        if ((xpos>=0)&&(xpos<=31)&&(ypos>=0)&&(ypos<=31)) setterr(ypos*32+xpos);
+        if ((xpos>=0)&&(xpos<=31)&&(ypos>=0)&&(ypos<=31)){
+          if (mode==1) setterr(ypos*32+xpos);
+          if (mode==3) buildat(ypos*32+xpos);
+        }
       }
 
       document.onmousedown=Mausklick;
