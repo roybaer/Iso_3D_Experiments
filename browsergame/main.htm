@@ -9,8 +9,9 @@
     <script type="text/javascript">
       maxterrnr = 8;
       terrfiles = new Array("wasser.gif","gras.gif","gras2.gif","gras3.gif","schngras.gif","erde.gif","fels.gif","sand.gif","schnee.gif");
-      builfiles = new Array("noimage.gif","baum.gif","baum_2.gif","baum_3.gif","laubbaum.gif");
-      builwh = new Array(100,50, 110,145, 100,140, 99,141, 169,133);
+      builfiles = new Array("noimage.gif","baum.gif","baum_2.gif","baum_3.gif","laubbaum.gif","weg.gif","weg_lr.gif","weg_ou.gif","weg_lo.gif","weg_ro.gif","weg_ru.gif","weg_lu.gif","weg_lou.gif","weg_lro.gif","weg_rou.gif","weg_lru.gif","weg_lrou.gif","haus1_1.gif","haus1_2.gif","haus1_3.gif","haus2_1.gif","haus2_2.gif","haus2_3.gif");
+      builwh = new Array(100,50, 110,145, 100,140, 99,141, 169,133, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 100,50, 300,190, 300,190, 300,190, 300,200, 300,200, 300,200);
+      buildiam = new Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3);
       terrmap = new Array(1024);
       builmap = new Array(1024);
       var building = 1;
@@ -65,12 +66,21 @@
 
       function canbuildat(index){
         var result=true;
-        if ((terrmap[index]==0)||(builmap[index]!=0)) result=false;
+        if ((buildiam[building]>=1)&&((terrmap[index]==0)||(builmap[index]!=0))) result=false;
+        if(buildiam[building]>=2){
+          if (!((index>=32)&&(index%32>0)&& (terrmap[index-1]!=0)&&(builmap[index-1]==0)&& (terrmap[index-32]!=0)&&(builmap[index-32]==0)&& (terrmap[index-33]!=0)&&(builmap[index-33]==0))) result=false;
+        }
+        if(buildiam[building]>=3){
+          if (!((index>31)&&(index%32<31)&& (terrmap[index+1]!=0)&&(builmap[index+1]==0)&& (terrmap[index+33]!=0)&&(builmap[index+33]==0)&& (terrmap[index+31]!=0)&&(builmap[index+31]==0)&& (terrmap[index+32]!=0)&&(builmap[index+32]==0)&& (terrmap[index-31]!=0)&&(builmap[index-31]==0))) result=false;
+        }
         return result;
       }
 
       function rembuil(index){
         if ((builmap[index]!=255)&&(builmap[index]!=0)){
+          if (buildiam[builmap[index]]>=2){builmap[index-1]=0; builmap[index-32]=0; builmap[index-33]=0}
+          if (buildiam[builmap[index]]>=3){builmap[index+31]=0; builmap[index+32]=0; builmap[index-31]=0; builmap[index+1]=0; builmap[index+33]=0}
+          if (buildiam[builmap[index]]>=4){builmap[index-34]=0; builmap[index-2]=0; builmap[index+30]=0; builmap[index-66]=0; builmap[index-65]=0; builmap[index-64]=0; builmap[index-63]=0}
           var building_removed=builmap[index];
           builmap[index]=0;
           bauten[index].src = "noimage.gif";
@@ -86,13 +96,17 @@
         {
           if (canbuildat(index)){
             bauten[index].src = builfiles[building];
-            var topOfs = 50+800-builwh[building*2+1]+Math.floor(index/32)*25-(index%32)*25;
+            var topOfs = 50+800-builwh[building*2+1]+Math.floor(index/32)*25-(index%32)*25+Math.floor(buildiam[building]/2)*50;
             var leftOfs = 50-builwh[building*2]/2+Math.floor(index/32)*50+(index%32)*50;
+            if (buildiam[building]==2){topOfs-=25; leftOfs-=50;}
             bauten[index].style.top=topOfs+"px";
             bauten[index].style.left=leftOfs+"px";
             bauten[index].width = builwh[building*2];
             bauten[index].height = builwh[building*2+1];
             builmap[index] = building;
+            if (buildiam[building]>=2){builmap[index-1]=255; builmap[index-32]=255; builmap[index-33]=255}
+            if (buildiam[building]>=3){builmap[index+31]=255; builmap[index+32]=255; builmap[index-31]=255; builmap[index+1]=255; builmap[index+33]=255}
+            if (buildiam[building]>=4){builmap[index-34]=255; builmap[index-2]=255; builmap[index+30]=255; builmap[index-66]=255; builmap[index-65]=255; builmap[index-64]=255; builmap[index-63]=255}
           }
         }
       }
