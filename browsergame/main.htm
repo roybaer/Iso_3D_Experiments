@@ -17,6 +17,7 @@
       var building = 1;
       var paintwith = 0;
       var mode = 1;
+      var correctingstreet=false;
 
       bilder = new Array(1024);
       for (y=0;y<=31;y++){
@@ -88,7 +89,39 @@
           bauten[index].style.left = Math.floor(index/32)*50+(index%32)*50+"px";
           bauten[index].width = 100;
           bauten[index].height = 50;
+          if ((building_removed>=5)&&(building_removed<=16)&&(!correctingstreet)){
+            if ((index>=32)&&(builmap[index-32]>=5)&&(builmap[index-32]<=16)) correctstreet(index-32);
+            if ((index<992)&&(builmap[index+32]>=5)&&(builmap[index+32]<=16)) correctstreet(index+32);
+            if ((index%32>=1)&&(builmap[index-1]>=5)&&(builmap[index-1]<=16)) correctstreet(index-1);
+            if ((index%32<31)&&(builmap[index+1]>=5)&&(builmap[index+1]<=16)) correctstreet(index+1);
+          }
         }
+      }
+
+      function correctstreet(index){
+        correctingstreet=true;
+        var old_building=building;
+        if ((index>=32)&&(builmap[index-32]>=5)&&(builmap[index-32]<=16)) var top=true;
+        if ((index%32>=1)&&(builmap[index-1]>=5)&&(builmap[index-1]<=16)) var left=true;
+        if ((index%32<31)&&(builmap[index+1]>=5)&&(builmap[index+1]<=16)) var right=true;
+        if ((index<992)&&(builmap[index+32]>=5)&&(builmap[index+32]<=16)) var bottom=true;
+
+        if ((!top)&&(!left)&&(!right)&&(!bottom)) building=5;
+        if ((!top)&&(!bottom)&&(left||right)) building=6;
+        if ((!left)&&(!right)&&(top||bottom)) building=7;
+        if (left&&top&&(!right)&&(!bottom)) building=8;
+        if (right&&top&&(!left)&&(!bottom)) building=9;
+        if ((!left)&&(!top)&&right&&bottom) building=10;
+        if (left&&bottom&&(!right)&&(!top)) building=11;
+        if (left&&top&&bottom&&(!right)) building=12;
+        if (left&&top&&(!bottom)&&right) building=13;
+        if ((!left)&&top&&bottom&&right) building=14;
+        if (left&&(!top)&&bottom&&right) building=15;
+        if (left&&top&&bottom&&right) building=16;
+        rembuil(index);
+        buildat(index);
+        building=old_building;
+        correctingstreet=false;
       }
 
       function buildat(index){
@@ -107,6 +140,13 @@
             if (buildiam[building]>=2){builmap[index-1]=255; builmap[index-32]=255; builmap[index-33]=255}
             if (buildiam[building]>=3){builmap[index+31]=255; builmap[index+32]=255; builmap[index-31]=255; builmap[index+1]=255; builmap[index+33]=255}
             if (buildiam[building]>=4){builmap[index-34]=255; builmap[index-2]=255; builmap[index+30]=255; builmap[index-66]=255; builmap[index-65]=255; builmap[index-64]=255; builmap[index-63]=255}
+            if ((building>=5)&&(building<=16)&&(!correctingstreet)){
+              correctstreet(index);
+              if ((index>=32)&&(builmap[index-32]>=5)&&(builmap[index-32]<=16)) correctstreet(index-32);
+              if ((index<992)&&(builmap[index+32]>=5)&&(builmap[index+32]<=16)) correctstreet(index+32);
+              if ((index%32>=1)&&(builmap[index-1]>=5)&&(builmap[index-1]<=16)) correctstreet(index-1);
+              if ((index%32<31)&&(builmap[index+1]>=5)&&(builmap[index+1]<=16)) correctstreet(index+1);
+            }
           }
         }
       }
