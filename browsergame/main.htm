@@ -34,6 +34,13 @@
         }
       }
 
+      var cursor = document.createElement("img");
+      cursor.src = "noimage.gif";
+      cursor.style.position = "absolute";
+      cursor.style.left = "0px";
+      cursor.style.top = "0px";
+      document.getElementById("mainbody").appendChild(cursor);
+
       bauten = new Array(1024);
       for (t=0;t<=63;t++){
         a=32-Math.abs(32-t);
@@ -165,6 +172,41 @@
       }
 
       document.onmousedown=Mausklick;
+
+      function Bewegung(Ereignis){
+        if (!Ereignis)
+          Ereignis = window.event;
+        if (mode==3){
+          var left=Ereignis.clientX+document.body.scrollLeft; // window.pageXOffset;
+          var top=Ereignis.clientY+document.body.scrollTop; // window.pageYOffset;
+          xpos=Math.round(((left-50)/50-(top-825)/25)/2);
+          ypos=Math.round(((top-825)/25+(left-50)/50)/2);
+          if ((xpos>=0)&&(xpos<=31)&&(ypos>=0)&&(ypos<=31)){
+            mLeftOfs=50-buildiam[building]*50+ypos*50+xpos*50;
+            mTopOfs=850-Math.ceil(buildiam[building]/2)*50+ypos*25-xpos*25;
+            if (buildiam[building]==2){mTopOfs-=25; mLeftOfs-=50;}
+            cursor.style.top=mTopOfs+"px";
+            cursor.style.left=mLeftOfs+"px";
+            cursor.width=buildiam[building]*100;
+            cursor.height=buildiam[building]*50;
+            if (canbuildat(ypos*32+xpos)){
+              cursor.src="cursor"+buildiam[building]+".gif";
+            }else{
+              cursor.src="rcursor"+buildiam[building]+".gif";
+            }
+          }else{
+            cursor.src="noimage.gif";
+            cursor.style.left="0px";
+            cursor.style.top="0px";
+          }
+        }else{
+          cursor.src="noimage.gif";
+          cursor.style.left="0px";
+          cursor.style.top="0px";
+        }
+      }
+
+      document.onmousemove=Bewegung;
 
     </script>
   </body>
