@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>Browsergame - ohne Menü nicht spielbar</title>
+    <meta name="author" content="Benedikt Freisen">
+  </head>
+  <body bgcolor="#404040" id="mainbody">
+    <script type="text/javascript">
+      maxterrnr = 8;
+      terrfiles = new Array("wasser.gif","gras.gif","gras2.gif","gras3.gif","schngras.gif","erde.gif","fels.gif","sand.gif","schnee.gif");
+      terrmap = new Array(1024);
+      var paintwith = 0;
+
+      bilder = new Array(1024);
+      for (y=0;y<=31;y++){
+        for (x=0;x<=31;x++){
+          i=y*32+x;
+          bilder[i] = document.createElement("img");
+          bilder[i].src = "wasser.gif";
+          bilder[i].style.position = "absolute";
+          bilder[i].style.top = 800+y*25-x*25+"px";
+          bilder[i].style.left = y*50+x*50+"px";
+          bilder[i].border=0;
+          document.getElementById("mainbody").appendChild(bilder[i]);
+          terrmap[i]=0;
+        }
+      }
+
+      function setterr(index){
+        if (paintwith<=maxterrnr){
+          terrmap[index] = paintwith;
+          bilder[index].src = terrfiles[paintwith]}else{bilder[index].src = terrfiles[0];
+        }
+      }
+
+      function Mausklick(Ereignis){
+        if (!Ereignis)
+          Ereignis = window.event;
+        var left=Ereignis.clientX+document.body.scrollLeft; // window.pageXOffset;
+        var top=Ereignis.clientY+document.body.scrollTop; // window.pageYOffset;
+        xpos=Math.round(((left-50)/50-(top-825)/25)/2);
+        ypos=Math.round(((top-825)/25+(left-50)/50)/2);
+        if ((xpos>=0)&&(xpos<=31)&&(ypos>=0)&&(ypos<=31)) setterr(ypos*32+xpos);
+      }
+
+      document.onmousedown=Mausklick;
+
+    </script>
+  </body>
+</html>
