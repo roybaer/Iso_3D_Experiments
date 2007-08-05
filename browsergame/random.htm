@@ -20,6 +20,12 @@ function bewalden(){
     }
   }
 }
+function berge_setzen(){
+  for (c=1;c<=document.forms[0].feld4.value;c++){
+    parent.main.building=Math.round(Math.random()+31);
+    parent.main.buildat(Math.round(Math.random()*927+32))
+  }
+}
 function entfernen(){
   for (c=0;c<=1023;c++){
     parent.main.building=0;
@@ -40,6 +46,8 @@ function preset(){
   document.forms[0].feld1.value=4;
   document.forms[0].feld2.value=25;
   verteilen();
+  document.forms[0].feld4.value=2;
+  berge_setzen();
   document.forms[0].feld3.value=25;
   bewalden();
 }
@@ -62,6 +70,9 @@ Nummer:<br>
 Anteil in %:<br>
 <input type="text" name="feld2" size="3" maxlength="3" value="100"><br><br>
 <input type="button" value="Verteilen" onclick="verteilen()"><br><hr>
+Berge (max.):<br>
+<input type="text" name="feld4" size="3" maxlength="3" value="5"><br><br>
+<input type="button" value="Setzen" onclick="berge_setzen()"><br><hr>
 Bewaldung in %:
 <input type="text" name="feld3" size="3" maxlength="3" value="25"><br><br>
 <input type="button" value="Bewalden" onclick="bewalden()"><br><hr>
