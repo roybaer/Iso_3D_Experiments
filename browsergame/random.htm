@@ -51,6 +51,38 @@ function preset(){
   document.forms[0].feld3.value=25;
   bewalden();
 }
+function preset2(){
+  entfernen();
+  document.forms[0].feld1.value=8;
+  document.forms[0].feld2.value=100;
+  verteilen();
+  document.forms[0].feld1.value=6;
+  document.forms[0].feld2.value=25;
+  verteilen();
+  document.forms[0].feld1.value=0;
+  document.forms[0].feld2.value=10;
+  verteilen();
+  document.forms[0].feld4.value=100;
+  berge_setzen();
+  document.forms[0].feld3.value=35;
+  bewalden();
+}
+function preset3(){
+  entfernen();
+  document.forms[0].feld1.value=7;
+  document.forms[0].feld2.value=100;
+  verteilen();
+  document.forms[0].feld1.value=5;
+  document.forms[0].feld2.value=25;
+  verteilen();
+  document.forms[0].feld1.value=0;
+  document.forms[0].feld2.value=2;
+  verteilen();
+  document.forms[0].feld4.value=5;
+  berge_setzen();
+  document.forms[0].feld3.value=10;
+  bewalden();
+}
 </script>
 <meta name="author" content="Benedikt Freisen">
 </head>
@@ -82,6 +114,8 @@ Bebauung:<br><br>
 Voreinstellungen:<br>
 <font size="2">
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; <a href="javascript:preset()">Gras und Wald</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&bull; <a href="javascript:preset2()">Wintergebirge</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&bull; <a href="javascript:preset3()">Karges Land</a>
 </font>
 </body>
 </html>
