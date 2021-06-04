@@ -6,17 +6,17 @@ This is a collection of my iso-3D experiments and artwork that I created between
 
 This picture shows the browsergame demo in action.
 
-<img src="browsergame.png" alt="Screenshot of the browsergame demo" width="640" height="305">
+![Screenshot of the browsergame demo](browsergame.png)
 
 There are also plenty of screenshots of the Turbo Pascal version in the subfolder `MyGameTP`, e.g. [this one](MyGameTP/0012.png).
 
 ## Required software
 
-While the browsergame demo can be viewed using any web browser, recreation of the graphics files and executables requires certain pieces of legacy software:
+While the browsergame demo can be viewed using any web browser with sufficiently lenient XSS policy, recreation of the graphics files and executables requires certain pieces of legacy software:
 
 - Caligary TrueSpace, preferably version 2.0 or 3.2
 - Borland Turbo Pascal, preferably version 7.0
-- SVGA BGI drivers by Jordan Horgraphix Software (shareware)
+- [SVGA BGI drivers](https://github.com/jharg93/SvgaBGI) by Jordan Hargraphix Software (now under MIT license, previously shareware)
 
 If you are only interested in the browsergame demo, just download it and open `browsergame.htm`.
 
